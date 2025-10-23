@@ -5,7 +5,7 @@ namespace UI
 {
     public class HealthSmoothSliderView : HealthSliderView
     {
-        [SerializeField] private float _smoothSpeed = 0.5f;
+        [SerializeField] private float _smoothSpeed = 2f;
         
         private Coroutine _moveCoroutine;
         private float _currentSliderValue;
