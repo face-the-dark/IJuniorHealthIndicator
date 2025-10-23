@@ -8,13 +8,14 @@ namespace UI
         [SerializeField] private float _smoothSpeed = 0.5f;
         
         private Coroutine _moveCoroutine;
+        private float _currentSliderValue;
         
         protected override void UpdateView(int currentValue, int maxValue)
         {
-            float currentPercentHealth = CalculateCurrentPercentHealth(currentValue, maxValue);
-
             StopMoveCoroutine();
 
+            _currentSliderValue = Slider.value;
+            float currentPercentHealth = CalculateCurrentPercentHealth(currentValue, maxValue);
             _moveCoroutine = StartCoroutine(MoveSliderValue(currentPercentHealth));
         }
 
@@ -29,9 +30,14 @@ namespace UI
 
         private IEnumerator MoveSliderValue(float currentPercentHealth)
         {
-            while (Mathf.Approximately(Slider.value, currentPercentHealth) == false)
+            float startTime = Time.time;
+            float duration = Mathf.Abs(currentPercentHealth - _currentSliderValue) * _smoothSpeed;
+            
+            while (Time.time < startTime + duration)
             {
-                Slider.value = Mathf.MoveTowards(Slider.value, currentPercentHealth, Time.deltaTime * _smoothSpeed);  
+                float stepValue = (Time.time - startTime) / duration;
+                
+                Slider.value = Mathf.Lerp(_currentSliderValue, currentPercentHealth, stepValue);  
             
                 yield return null;
             }

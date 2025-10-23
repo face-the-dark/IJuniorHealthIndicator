@@ -1051,7 +1051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: {fileID: 1287962485}
   Slider: {fileID: 1545759655}
-  _smoothSpeed: 5
+  _smoothSpeed: 2
 --- !u!1 &1630813143
 GameObject:
   m_ObjectHideFlags: 0
